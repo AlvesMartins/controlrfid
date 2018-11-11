@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+{% extends "commons/login.html" %}
+{% load staticfiles %}
+{% load bootstrap3 %}
+
+{% block body_box %}
+
+{% if user.is_authenticated %}
+  <div class="alert alert-success" role="alert">
+    Hi {{ user }} <a href="{% url 'homepage' %}" class="btn btn-primary" role="button">Your Panel</a>
+  </div> 
+    
+{% else %}
+  <form action="{% url 'login' %}" method="post" class="form">
+      {% csrf_token %}
+      {% bootstrap_form form %}
+      {% buttons %}
+          <button type="submit" class="btn btn-primary">
+              Log In {% bootstrap_icon "user" %} 
+          </button>
+      {% endbuttons %}
+  </form>
+{% endif %}
+
+<br>
+<a href="{% url 'register' %}" class="text-center">Register a new user</a>
+        
+{% endblock body_box %}

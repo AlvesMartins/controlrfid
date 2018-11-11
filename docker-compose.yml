@@ -1,0 +1,49 @@
+version: '3'
+services :
+  phpmyadmin:
+      image: phpmyadmin/phpmyadmin:latest
+      container_name: phpmyadmin-server
+      restart: always
+      links:     
+        - db
+      environment:
+        - PMA_ARBITRARY=1
+        - PMA_HOST=db
+        - PMA_USER=admin
+        - PMA_PASSWORD=admin
+        - db
+      ports:
+        - 8181:80
+      depends_on:
+        - db
+
+  api:
+      image: api
+      container_name: api-server
+      restart: always
+      links:
+        - db
+      ports:
+        - 8000:8000
+      volumes:
+        - ./data/web/:/data/web/
+      depends_on:
+        - db
+ 
+  db :
+      image : mysql:5.7
+      container_name : db-server
+      restart: always
+      environment:
+        MYSQL_ROOT_PASSWORD : adminroot
+        MYSQL_USER : admin
+        MYSQL_PASSWORD : admin
+        MYSQL_DATABASE : controlrfid
+      volumes :
+        - ./sql/:/docker-entrypoint-initdb.d/
+        - ./database/:/var/lib/mysql
+      ports :
+        - 3306:3306
+
+
+  

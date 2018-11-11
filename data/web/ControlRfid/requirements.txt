@@ -1,0 +1,10 @@
+Django==1.9.2
+djangorestframework
+urllib3
+pyTelegramBotAPI
+django-admin-bootstrapped
+django-extensions
+django-bootstrap3
+django-graphos
+ndg-httpsclient
+PySocks
