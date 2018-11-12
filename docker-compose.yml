@@ -1,6 +1,6 @@
 version: '3'
 services :
-    db :
+  db :
       image : mysql:5.7
       container_name : db-server
       restart: always
@@ -10,11 +10,10 @@ services :
         MYSQL_PASSWORD : admin
         MYSQL_DATABASE : controlrfid
       volumes :
-        - ./sql/:/docker-entrypoint-initdb.d/
         - ./database/:/var/lib/mysql
       ports :
         - 3306:3306
-
+        
   phpmyadmin:
       image: phpmyadmin/phpmyadmin:latest
       container_name: phpmyadmin-server
@@ -29,7 +28,8 @@ services :
         - db
       ports:
         - 8181:80
-   
+      depends_on:
+        - db
 
   api:
       image: api
@@ -41,7 +41,8 @@ services :
         - 8000:8000
       volumes:
         - ./data/web/:/data/web/
-  
+      depends_on:
+        - db
  
 
 
