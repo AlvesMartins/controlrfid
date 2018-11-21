@@ -16,7 +16,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
-
+# pip install django-crispy-forms
+#pip install django_tables2
 # Application definition
 
 INSTALLED_APPS = (
@@ -27,6 +28,8 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_tables2',
+    'crispy_forms',
     'django_extensions',
     'rest_framework',
     'bootstrap3',
@@ -34,6 +37,9 @@ INSTALLED_APPS = (
     'commons',
     'graphos',
 )
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+MESSAGE_STORAGE = 'django.contrib.messages.storage.cookie.CookieStorage'
+MESSAGE_LEVEL = 10
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -71,13 +77,20 @@ WSGI_APPLICATION = 'core.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'controlrfid',
-        'USER': 'admin',
-        'PASSWORD': 'admin',
-        'HOST': 'db',
-        'PORT': '3306',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
+
+#    'default': {
+#        'ENGINE': 'django.db.backends.mysql',
+#        'NAME': 'controlrfid',
+#        'USER': 'admin',
+#        'PASSWORD': 'admin',
+#        'HOST': 'db',
+#        'PORT': '3306',
+#    }
+
+
 }
 
 

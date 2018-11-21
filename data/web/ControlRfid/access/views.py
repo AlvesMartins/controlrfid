@@ -1,17 +1,23 @@
 from django.shortcuts import render
 from rest_framework import generics
-from .models import Device, Log, Door,Payment
-from .serializers import DeviceResultSerializer, LogSerializer, DoorSerializer
+from .models import Device, Log, Evento, Payment, Zona
+from .serializers import DeviceResultSerializer, LogSerializer, ZonaSerializer, EventoSerializer
 from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
-
 from graphos.renderers import flot, gchart
 from graphos.sources.simple import SimpleDataSource
-
+from django.contrib import messages
 from django import forms
+from form import PostForm
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render
+from django_tables2 import RequestConfig
+from .table import EventoTable, ZonaTable
+from django.utils import timezone
+from django.shortcuts import redirect
+
+
 
 
 # Create your views here.
@@ -27,9 +33,16 @@ class DeviceIDList(generics.ListAPIView):
         Device.check_exists_device(code_id)
         
         return Device.objects.filter(code=code_id)
-class DoorIDList(generics.ListAPIView):
-    queryset = Door.objects.all()
-    serializer_class = DoorSerializer
+
+class ZonaIDList(generics.ListAPIView):
+    queryset = Zona.objects.all()
+    serializer_class = ZonaSerializer
+    def put(self, request, *args, **kwargs):
+            return self.update(request, *args, **kwargs)
+
+class EventoIDList(generics.ListAPIView):
+    queryset = Evento.objects.all()
+    serializer_class = EventoSerializer
     def put(self, request, *args, **kwargs):
             return self.update(request, *args, **kwargs)
 
@@ -58,6 +71,30 @@ def homepage(request):
 def personal_info(request):
     return render(request, 'access/info.html')
 
+@login_required(login_url='/')
+def eventos_info(request):
+    evento = EventoTable(Evento.objects.all())
+    zona = ZonaTable(Zona.objects.all())
+    RequestConfig(request, paginate={'per_page': 10}).configure(zona)
+    RequestConfig(request, paginate={'per_page': 10}).configure(evento)
+    if request.method == "POST":
+        form = PostForm(request.POST)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.author = request.user
+            post.published_date = timezone.now()
+            post.save()
+            messages.success(request, 'submission successful')
+            return redirect('/accounts/profile/eventosADM')
+    else:
+        form = PostForm()
+    return render(request, 'access/eventos.html', {'evento': evento, 'zona': zona, 'form': form})
+
+@login_required(login_url='/')
+def event_info(request):
+    evento = EventoTable(Evento.objects.all())
+    RequestConfig(request, paginate={'per_page': 10}).configure(evento)
+    return render(request, 'access/event.html', {'evento': evento})
 
 @login_required(login_url='/')
 def device_info(request):

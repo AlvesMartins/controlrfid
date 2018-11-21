@@ -27,6 +27,7 @@
     <![endif]-->
   </head>
   <body class="hold-transition skin-blue sidebar-mini layout-boxed">
+  
     <!-- Site wrapper -->
     <div class="wrapper">
 
@@ -81,11 +82,16 @@
               </ul>
             </li>
             <li>
-              <a href="#">
-                <i class="fa fa-list"></i> <span>Logs</span> 
+              <a href="{% url 'event_info' %}">
+                <i class="fa fa-list"></i> <span>Eventos</span> 
               </a>
             </li>
             {% if user.is_superuser %}
+            <li>
+              <a href="{% url 'eventos_info' %}">
+                <i class="fa fa-list"></i> <span>LiberaçãoAdmin</span> 
+              </a>
+            </li>
             <li>
               <a href="/admin">
                 <i class="fa fa-bolt"></i> <span>ADMIN Panel</span>

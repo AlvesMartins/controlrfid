@@ -1,0 +1,11 @@
+{% if messages %}
+    <div>
+     <h1>
+        <ul>
+            {% for message in messages %}
+                <li size="2">{{ message }}</li>
+            {% endfor %}
+        </ul>
+     </h1>
+    </div>
+{% endif %}

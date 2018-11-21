@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from core.settings_local import VALUE_PAYMENT_TRUE, MAX_GRANTED_DAYS
-from .models import Device, Payment, Log, Door
+from .models import Device, Payment, Log, Zona, Evento
 import datetime
 from django.contrib.auth.models import User
 
@@ -10,10 +10,17 @@ class UserSerializer(serializers.ModelSerializer):
             fields = ('id', 'username', 'email', 'first_name', 'last_name')
 
 
-class DoorSerializer(serializers.ModelSerializer):
+class ZonaSerializer(serializers.ModelSerializer):
     class Meta:
-            model = Door
-            fields = ('user', 'last_update', 'door_one', 'door_two', 'door_three')
+            model = Zona
+            fields = ('fechadura', 'etiqueta', 'acesso')
+
+
+class EventoSerializer(serializers.ModelSerializer):
+    class Meta:
+            model = Evento
+            fields = ('evento', 'fechadura', 'etiqueta', 'ocorrencia', 'comando', 'descri')
+
     
 
 class LogSerializer(serializers.ModelSerializer):

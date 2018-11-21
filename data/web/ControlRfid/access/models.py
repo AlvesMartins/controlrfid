@@ -11,19 +11,15 @@ import urllib3
 class Device(models.Model):
     __tablename__ = 'cp_device'
     
-    NFC = 'nfc'
-    MAC = 'mac'
     TAG = 'tag'
     DEVICE_CHOICES = (
-        (NFC, 'NFC'),
-        (MAC, 'MAC'),
         (TAG, 'TAG'),
     )
 
     user = models.ForeignKey(User)
     kind = models.CharField(max_length=3,
                                       choices=DEVICE_CHOICES,
-                                      default=NFC,
+                                      default=TAG,
                                       blank=False,
                                       )
     code = models.CharField(max_length=64, blank=False)
@@ -40,18 +36,39 @@ class Device(models.Model):
             caronte = User.objects.filter(username="lucas").first()
             device_create = Device.objects.create(user=caronte, kind='tag', code=code_id)
 
-class Door(models.Model):
-    __tablename__ = 'door'
+class Zona(models.Model):
+    __tablename__ = 'zonas'
 
-    user = models.ForeignKey(User)
-    last_update = models.DateTimeField()
-    door_one = models.BooleanField(default=False)
-    door_two = models.BooleanField(default=False)
-    door_three = models.BooleanField(default=False)
+    fechadura = models.IntegerField()
+    etiqueta = models.CharField(max_length=12)
+    acesso = models.DateTimeField(auto_now_add=True)
     class Meta:
-        unique_together = ["user"]
         def __str__(self):
             return self.id()
+
+class Evento(models.Model):
+    __tablename__ = 'eventos'
+
+    Liberado = 'Acesso liberado'
+    Negado = 'Accesso Negado'
+    DEVICE_CHOICES = (
+        (Liberado, 'Liberado'),
+        (Negado , 'Negado')
+    )
+    evento = models.AutoField(primary_key=True)
+    fechadura = models.IntegerField()
+    etiqueta = models.CharField(max_length=12)
+    ocorrencia = models.DateTimeField(auto_now_add=True)
+    comando = models.IntegerField()
+    descri = models.CharField(max_length=150,
+                                      choices=DEVICE_CHOICES,
+                                      default=Negado,
+                                      blank=False,
+                                      )
+    class Meta:
+        def __str__(self):
+            return self.id()
+
 
 
 class Log(models.Model):

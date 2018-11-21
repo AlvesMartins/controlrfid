@@ -1,17 +1,22 @@
 # -*- coding: utf-8 -*-
 from django.contrib import admin
 
-from access.models import Payment, Device, Log, Door
+from access.models import Payment, Device, Log, Zona, Evento
 
 from django.utils.safestring import mark_safe
 from django.contrib.auth.models import User, Group
 from django.contrib.auth.admin import UserAdmin, GroupAdmin
 
 
-class DoorAdmin(admin.ModelAdmin): 
-  list_display = ('user', 'last_update', 'door_one', 'door_two', 'door_three')
-  search_fields = ('user', 'door_one', 'door_two', 'door_three' )
-  list_filter = ('user',) 
+class ZonaAdmin(admin.ModelAdmin): 
+  list_display = ('fechadura', 'etiqueta', 'acesso')
+  search_fields = ('fechadura', 'etiqueta', 'acesso')
+  list_filter = ('fechadura',) 
+
+class EventoAdmin(admin.ModelAdmin): 
+  list_display = ('evento', 'fechadura', 'etiqueta', 'ocorrencia', 'comando', 'descri')
+  search_fields = ('evento', 'fechadura', 'etiqueta', 'ocorrencia', 'comando', 'descri')
+  list_filter = ('evento',) 
 
 class DeviceAdmin(admin.ModelAdmin): 
   list_display = ('kind', 'user', 'code') 
@@ -73,4 +78,6 @@ admin.site.register(User, UserAdmin)
 admin.site.register(Group, GroupAdmin)
 admin.site.register(Device, DeviceAdmin)
 admin.site.register(Log, LogAdmin)
-admin.site.register(Door, DoorAdmin)
+admin.site.register(Evento, EventoAdmin)
+admin.site.register(Zona, ZonaAdmin)
+

@@ -5,6 +5,8 @@ pyTelegramBotAPI
 django-admin-bootstrapped
 django-extensions
 django-bootstrap3
+django_tables2
+django-crispy-forms
 django-graphos
 ndg-httpsclient
 PySocks
