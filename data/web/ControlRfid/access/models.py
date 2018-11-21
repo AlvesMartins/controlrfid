@@ -37,7 +37,7 @@ class Device(models.Model):
             device_create = Device.objects.create(user=caronte, kind='tag', code=code_id)
 
 class Zona(models.Model):
-    __tablename__ = 'zonas'
+    __tablename__ = 'cp_zonas'
 
     fechadura = models.IntegerField()
     etiqueta = models.CharField(max_length=12)
@@ -47,7 +47,7 @@ class Zona(models.Model):
             return self.id()
 
 class Evento(models.Model):
-    __tablename__ = 'eventos'
+    __tablename__ = 'cp_eventos'
 
     Liberado = 'Acesso liberado'
     Negado = 'Accesso Negado'

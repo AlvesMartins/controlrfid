@@ -37,7 +37,6 @@ INSTALLED_APPS = (
     'commons',
     'graphos',
 )
-CRISPY_TEMPLATE_PACK = 'bootstrap4'
 MESSAGE_STORAGE = 'django.contrib.messages.storage.cookie.CookieStorage'
 MESSAGE_LEVEL = 10
 
@@ -76,19 +75,19 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # Database
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-
 #    'default': {
-#        'ENGINE': 'django.db.backends.mysql',
-#        'NAME': 'controlrfid',
-#        'USER': 'admin',
-#        'PASSWORD': 'admin',
-#        'HOST': 'db',
-#        'PORT': '3306',
+#        'ENGINE': 'django.db.backends.sqlite3',
+#        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
 #    }
+
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'controlrfid',
+        'USER': 'admin',
+        'PASSWORD': 'admin',
+        'HOST': 'db',
+        'PORT': '3306',
+    }
 
 
 }
