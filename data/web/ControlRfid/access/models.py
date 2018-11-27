@@ -36,10 +36,32 @@ class Device(models.Model):
             caronte = User.objects.filter(username="lucas").first()
             device_create = Device.objects.create(user=caronte, kind='tag', code=code_id)
 
+class Ambiente(models.Model):
+    __tablename__ = 'cp_ambiente'
+
+    fechadura = models.IntegerField(primary_key=True)
+    ambiente = models.CharField(max_length=150)
+    descri = models.CharField(max_length=150)
+    class Meta:
+        unique_together = ["fechadura"]
+    def __unicode__(self):
+        return unicode(self.fechadura)
+
+
+class Acesso(models.Model):
+    __tablename__ = 'cp_acessos'
+
+    ambiente = models.ManyToManyField(Ambiente)
+    etiqueta = models.CharField(max_length=12)
+    acesso = models.DateTimeField(auto_now_add=True)
+    def get_ambiente(self):
+        return "\n".join([p.ambiente for p in self.ambiente.all()])
+
+
 class Zona(models.Model):
     __tablename__ = 'cp_zonas'
 
-    fechadura = models.IntegerField()
+    fechadura = models.ForeignKey(Ambiente)
     etiqueta = models.CharField(max_length=12)
     acesso = models.DateTimeField(auto_now_add=True)
     class Meta:
@@ -50,7 +72,7 @@ class Evento(models.Model):
     __tablename__ = 'cp_eventos'
 
     Liberado = 'Acesso liberado'
-    Negado = 'Accesso Negado'
+    Negado = 'Acesso Negado'
     DEVICE_CHOICES = (
         (Liberado, 'Liberado'),
         (Negado , 'Negado')

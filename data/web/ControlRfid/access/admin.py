@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.contrib import admin
 
-from access.models import Payment, Device, Log, Zona, Evento
+from access.models import Payment, Device, Log, Zona, Evento, Ambiente, Acesso
 
 from django.utils.safestring import mark_safe
 from django.contrib.auth.models import User, Group
@@ -12,6 +12,17 @@ class ZonaAdmin(admin.ModelAdmin):
   list_display = ('fechadura', 'etiqueta', 'acesso')
   search_fields = ('fechadura', 'etiqueta', 'acesso')
   list_filter = ('fechadura',) 
+
+class AcessoAdmin(admin.ModelAdmin): 
+  list_display = ('get_ambiente', 'etiqueta', 'acesso')
+  search_fields = ('ambiente', 'etiqueta', 'acesso')
+  list_filter = ('ambiente',) 
+
+class AmbienteAdmin(admin.ModelAdmin): 
+  list_display = ('fechadura', 'ambiente', 'descri')
+  search_fields = ('fechadura', 'ambiente', 'descri')
+  list_filter = ('fechadura', 'ambiente',) 
+  pass
 
 class EventoAdmin(admin.ModelAdmin): 
   list_display = ('evento', 'fechadura', 'etiqueta', 'ocorrencia', 'comando', 'descri')
@@ -75,9 +86,11 @@ class GroupAdmin(GroupAdmin):
 admin.site.unregister(User)
 admin.site.unregister(Group)
 admin.site.register(User, UserAdmin)
+admin.site.register(Ambiente, AmbienteAdmin)
+#admin.site.register(Acesso, AcessoAdmin)
 admin.site.register(Group, GroupAdmin)
-admin.site.register(Device, DeviceAdmin)
-admin.site.register(Log, LogAdmin)
+#admin.site.register(Device, DeviceAdmin)
+#admin.site.register(Log, LogAdmin)
 admin.site.register(Evento, EventoAdmin)
 admin.site.register(Zona, ZonaAdmin)
 

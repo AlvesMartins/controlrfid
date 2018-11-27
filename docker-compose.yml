@@ -1,7 +1,9 @@
 version: '3'
 services :
   db :
-      image : mysql:5.7
+      
+      #image : hypriot/rpi-mysql:arm-5.5
+      image: mysql:5.7
       container_name : db-server
       restart: always
       environment:
@@ -13,23 +15,6 @@ services :
         - ./database/:/var/lib/mysql
       ports :
         - 3306:3306
-        
-  phpmyadmin:
-      image: phpmyadmin/phpmyadmin:latest
-      container_name: phpmyadmin-server
-      restart: always
-      links:     
-        - db
-      environment:
-        - PMA_ARBITRARY=1
-        - PMA_HOST=db
-        - PMA_USER=admin
-        - PMA_PASSWORD=admin
-        - db
-      ports:
-        - 8181:80
-      depends_on:
-        - db
 
   api:
       image: api

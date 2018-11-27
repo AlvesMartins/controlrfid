@@ -37,6 +37,7 @@ INSTALLED_APPS = (
     'commons',
     'graphos',
 )
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 MESSAGE_STORAGE = 'django.contrib.messages.storage.cookie.CookieStorage'
 MESSAGE_LEVEL = 10
 
