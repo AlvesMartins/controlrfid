@@ -2,8 +2,8 @@ version: '3'
 services :
   db :
       
-      #image : hypriot/rpi-mysql:arm-5.5
-      image: mysql:5.7
+      image : hypriot/rpi-mysql:arm-5.5
+      #image: mysql:5.7
       container_name : db-server
       restart: always
       environment:
